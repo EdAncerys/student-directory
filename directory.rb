@@ -1,19 +1,21 @@
 # lets put all students into an array
-students = [
-  {name: "Dr. Hannibal Lecter", cohort: :november},
-  {name: "Darth Vader", cohort: :november},
-  {name: "Nurse Ratched", cohort: :november},
-  {name: "Michael Corleone", cohort: :november},
-  {name: "Alex DeLarge", cohort: :november},
-  {name: "The Wicked Wich of The West", cohort: :november},
-  {name: "Terminator", cohort: :november},
-  {name: "Freddy Krueger", cohort: :november},
-  {name: "The Joker", cohort: :november},
-  {name: "Joffrey Baratheon", cohort: :november},
-  {name: "Norman Bates", cohort: :november}
-]
+# students = [
+#   {name: "Dr. Hannibal Lecter", cohort: :november},
+#   {name: "Darth Vader", cohort: :november},
+#   {name: "Nurse Ratched", cohort: :november},
+#   {name: "Michael Corleone", cohort: :november},
+#   {name: "Alex DeLarge", cohort: :november},
+#   {name: "The Wicked Wich of The West", cohort: :november},
+#   {name: "Terminator", cohort: :november},
+#   {name: "Freddy Krueger", cohort: :november},
+#   {name: "The Joker", cohort: :november},
+#   {name: "Joffrey Baratheon", cohort: :november},
+#   {name: "Norman Bates", cohort: :november}
+# ]
+
 
 # exercise 9 adding an interactive menu
+
 @students = [] # an emty array accssible to all methods
 
 def try_load_students
@@ -21,34 +23,55 @@ def try_load_students
   return if filename.nil? # leaves the method if it isn't given
   if File.exists?(filename) # if it exists
     load_students(filename)
-     puts "Loaded #{@students.count} from #{filename}"
+    puts "Loaded #{@students.count} names from #{filename} #{self}"
+    puts "-" * 35
   else # if it doesn't exist
+    puts "-" * 35
     puts "Sorry, #{filename} doesn't exist."
+    puts "-" * 35
     exit # quit the program
   end
 end
 
 def save_students
+  puts "Enter file name to save"
+  save_to_file = STDIN.gets.chomp
   # open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(save_to_file, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-  puts "Student name list saved to file"
+  puts "Student names saved to file"
   file.close
 end
 
+def load_user_selection
+  puts "Enter *.csv file name from where to load the data from"
+  puts "Hit return to skip"
+  file_to_load = Dir.glob("*.{csv,txt}")
+  puts "-" * 40
+  puts file_to_load
+  puts "-" * 40
+  path = STDIN.gets.chomp
+end
+
 def load_students(filename = "students.csv")
-  file = File.open("students.csv", "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  if !File.exist?(filename)
+    puts "File not loaded"
+  else
+    File.open(filename, "r") do |file|
+      file.readlines.each do |line|
+        name, cohort = line.chomp.split(',')
+        @students << {name: name, cohort: cohort.to_sym}
+      end
+      puts "-" * 40
+      puts "* Name list uploaded from #{filename} *"
+      puts "-" * 40
+    end
   end
-  puts "Name list uploaded from #{filename}"
-  file.close
 end
 
 def input_students
@@ -100,6 +123,7 @@ def process(selection)
   when "4"
     load_students
   when "9"
+    puts "Thanks and see you soon!"
     exit # this will cause the program to terminate
   else
     puts "I don't know what you meant, try again"
@@ -128,10 +152,6 @@ def print_footer
   puts "Overall, we have #{@students.count} great students" 
 end
 
-# nothing happens until we call the methods
-# students = input_students 
-# print_header
-# print(students)
-# print_footer(students)
 try_load_students
+load_students(load_user_selection)
 interactive_menu
