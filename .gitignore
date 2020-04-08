@@ -1,1 +1,3 @@
-students.csv
+*.csv
+*.txt
+dir_test.rb

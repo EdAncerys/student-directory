@@ -1,34 +1,17 @@
-# lets put all students into an array
-# students = [
-#   {name: "Dr. Hannibal Lecter", cohort: :november},
-#   {name: "Darth Vader", cohort: :november},
-#   {name: "Nurse Ratched", cohort: :november},
-#   {name: "Michael Corleone", cohort: :november},
-#   {name: "Alex DeLarge", cohort: :november},
-#   {name: "The Wicked Wich of The West", cohort: :november},
-#   {name: "Terminator", cohort: :november},
-#   {name: "Freddy Krueger", cohort: :november},
-#   {name: "The Joker", cohort: :november},
-#   {name: "Joffrey Baratheon", cohort: :november},
-#   {name: "Norman Bates", cohort: :november}
-# ]
-
-
 # exercise 9 adding an interactive menu
 
 @students = [] # an emty array accssible to all methods
+@devider_1 = "-" * 45
+@devider_2 = "*" * 45
 
 def try_load_students
   filename = ARGV.first # first argument from the command line
   return if filename.nil? # leaves the method if it isn't given
   if File.exists?(filename) # if it exists
     load_students(filename)
-    puts "Loaded #{@students.count} names from #{filename} #{self}"
-    puts "-" * 35
+    p "Loaded #{@students.count} names from #{filename} #{self}", @devider_2
   else # if it doesn't exist
-    puts "-" * 35
-    puts "Sorry, #{filename} doesn't exist."
-    puts "-" * 35
+    p @devider_1, "Sorry, #{filename} doesn't exist.", @devider_1
     exit # quit the program
   end
 end
@@ -52,9 +35,7 @@ def load_user_selection
   puts "Enter *.csv file name from where to load the data from"
   puts "Hit return to skip"
   file_to_load = Dir.glob("*.{csv,txt}")
-  puts "-" * 40
-  puts file_to_load
-  puts "-" * 40
+  p @devider_2, file_to_load, @devider_2
   path = STDIN.gets.chomp
 end
 
@@ -67,9 +48,7 @@ def load_students(filename = "students.csv")
         name, cohort = line.chomp.split(',')
         @students << {name: name, cohort: cohort.to_sym}
       end
-      puts "-" * 40
-      puts "* Name list uploaded from #{filename} *"
-      puts "-" * 40
+      p @devider_2, "* Name list uploaded from #{filename} *", @devider_2
     end
   end
 end
@@ -131,9 +110,7 @@ def process(selection)
 end
 
 def print_header
-  puts "-" * 31
-  puts "The student of Villains Academy"
-  puts "-" * 31
+  p @devider_1, "The student of Villains Academy", @devider_1
 end
 
 def print(input_names)
