@@ -1,1 +1,3 @@
-a='a=%s%s%s;print(a%%(chr(39),a,chr(39)))';print(a%(chr(39),a,chr(39)))
+# Ruby Quine
+str="str=;puts str[0,4]+34.chr+str+34.chr+str[4..-1]";puts str[0,4]+34.chr+str+34.chr+str[4..-1]
+#=> str="str=;puts str[0,4]+34.chr+str+34.chr+str[4..-1]";puts str[0,4]+34.chr+str+34.chr+str[4..-1]
