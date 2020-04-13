@@ -31,6 +31,14 @@ def save_students
   file.close
 end
 
+# @students.each do |student|
+#   student_data = [student[:name],student[:cohort]]
+#   cvs_line = student_data.join(“,”)
+#   CSV.parse(cvs_line)
+# end
+#   puts “File have been saved!”
+# end
+
 def load_user_selection
   puts "Enter *.csv file name from where to load the data from"
   puts "Hit return to skip"
@@ -113,7 +121,7 @@ def print_header
   p @devider_1, "The student of Villains Academy", @devider_1
 end
 
-def print(input_names)
+def print_student_list (input_names)
   input_names.each do |input| 
     puts "#{input[:name]} (#{input[:cohort]} cohort)"
   end
@@ -130,5 +138,16 @@ def print_footer
 end
 
 try_load_students
-load_students(load_user_selection)
+load_students("students.txt")
 interactive_menu
+ 
+@students_test = []
+def test_file_load
+  File.foreach("students.csv") do |line|
+    name, cohort, extra = line
+    @students_test << "#{name} #{cohort}"
+  end
+end
+
+# test_file_load()
+# print @students_test
